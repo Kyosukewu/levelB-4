@@ -5,12 +5,7 @@ session_start();
 
 /**判斷瀏灠人次 */
 
-$Total=new DB('total');
-$Mem=new DB('mem');
-$News=new DB('news');
-$Log=new DB('log');
-$Que=new DB('que');
-
+$Bottom=new DB('bottom');
 
 
 class DB{
