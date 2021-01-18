@@ -8,7 +8,7 @@ function lof(x)
 function login(table) {
 	let acc = $('#acc').val()
 	let pw = $('#pw').val()
-	let ans = $('#anc').val()
+	let ans = $('#ans').val()
 
 	$.get('api/ans.php', {
 		ans
@@ -35,5 +35,11 @@ function login(table) {
 		} else {
 			alert("對不起，您輸入的驗證碼有誤，請您重新登入")
 		}
+	})
+}
+
+function del(table,id){
+	$.post('api/del.php',{table,id},function(){
+		location.reload()
 	})
 }
