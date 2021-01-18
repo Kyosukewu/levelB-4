@@ -6,6 +6,7 @@ session_start();
 /**判斷瀏灠人次 */
 
 $Bottom=new DB('bottom');
+$Mem=new DB('mem');
 
 
 class DB{
