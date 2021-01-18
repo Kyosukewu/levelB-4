@@ -3,6 +3,8 @@ include_once "../base.php";
 
 $acc=$_GET['acc'];
 $chk=$Mem->count(['acc'=>$acc]);
-return $chk;
+echo $chk;
+
+// echo $Mem->count(['acc'=>$_GET['acc']]); 簡化
 
 ?>
