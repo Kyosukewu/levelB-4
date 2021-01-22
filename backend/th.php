@@ -8,11 +8,58 @@
 <form action="api/add_mid.php" method="post">
     <div class="ct">新增中分類
         <select name="big" id="">
+            <?php
+            $bigs = $Type->all(['parent' => 0]);
+            foreach ($bigs as $big) {
+                echo "<option value='{$big['id']}'>{$big['name']}</option>";
+            }
+            ?>
         </select>
         <input type="text" name="mid">
         <input type="submit" value="新增">
     </div>
 </form>
+
+<table class="all">
+    <?php
+    foreach ($bigs as $big) {
+    ?>
+        <tr class="tt">
+            <td id="t<?=$big['id'];?>"><?= $big['name']; ?></td>
+            <td class="ct">
+                <button onclick="edit('<?=$big['id'];?>','<?=$big['name'];?>')">修改</button>
+                <button onclick="del('type',<?=$big['id'];?>)">刪除</button>
+            </td>
+        </tr>
+        <?php
+        $mids = $Type->all(['parent' => $big['id']]);
+        if (!empty($mids)) {
+            foreach ($mids as $key => $value) {
+        ?>
+        <tr class="pp ct">
+            <td id="t<?=$value['id'];?>"><?=$value['name'];?></td>
+            <td><button onclick="edit('<?=$value['id'];?>','<?=$value['name'];?>')">修改</button>
+                <button onclick="del('type',<?=$value['id'];?>)">刪除</button></td>
+        </tr>
+    <?php
+            }
+        }
+    }
+    ?>
+</table>
 <hr>
 <h2 class="ct">商品管理</h2>
-<div class="ct"><button onclick="lof('?do=add_goods.php')">新增商品</button></div>
+<div class="ct"><button onclick="lof('?do=add_goods')">新增商品</button></div>
+
+
+<script>
+    function edit(id,name){
+        let result=prompt('修改分類名稱為',name)
+        if(result!=null){
+            $.post('api/edit_type.php',{id,result},function(){
+                $('#t'+id).html(result)
+                // location.reload()
+            })
+        }
+    }
+</script>

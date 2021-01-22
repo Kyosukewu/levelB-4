@@ -8,7 +8,7 @@ session_start();
 $Bottom=new DB('bottom');
 $Mem=new DB('mem');
 $Admin=new DB('admin');
-
+$Type=new DB('type');
 
 class DB{
     private $dsn="mysql:host=localhost;dbname=db214;charset=utf8";
