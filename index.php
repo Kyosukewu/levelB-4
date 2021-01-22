@@ -26,8 +26,20 @@ include_once "base.php";
                                 <a href="index.php?do=news">最新消息</a> |
                                 <a href="index.php?do=look">購物流程</a> |
                                 <a href="index.php?do=buycart">購物車</a> |
-                                <a href="index.php?do=login">會員登入</a> |
-                                <a href="index.php?do=admin">管理登入</a>
+                                <?php if (empty($_SESSION['mem'])) { ?>
+                                        <a href="index.php?do=login">會員登入</a> |
+                                <?php } else { ?>
+                                        <a href="javascript:lof('api/logout.php?do=mem')">登出</a> |
+                                <?php
+                                }
+                                if (empty($_SESSION['admin'])) {
+                                ?>
+                                        <a href="index.php?do=admin">管理登入</a>
+                                <?php } else { ?>
+                                        <a href="backend.php">返回管理</a>
+                                <?php
+                                }
+                                ?>
                         </div>
                         <marquee>年終特賣會開跑了 &nbsp; 情人節特惠活動</marquee>
                 </div>
@@ -46,13 +58,13 @@ include_once "base.php";
                         $file = "front/" . $do . ".php";
                         if (file_exists($file)) {
                                 include_once $file;
-                        }else{
+                        } else {
                                 echo "檔案不存在";
                         }
                         ?>
                 </div>
                 <div id="bottom" style="line-height:70px;background:url(img/bot.png); color:#FFF;" class="ct">
-                <?=$Bottom->find(1)['bottom'];?> </div>
+                        <?= $Bottom->find(1)['bottom']; ?> </div>
         </div>
 
 </body>
