@@ -45,6 +45,28 @@ include_once "base.php";
                 </div>
                 <div id="left" class="ct">
                         <div style="min-height:400px;">
+                                <a href="?">全部商品(<?=$Goods->count();?>)</a>
+                                <?php
+                                $bigs = $Type->all(['parent' => 0]);
+                                foreach ($bigs as $big) {
+                                        ?>
+                                        <div class="ww">
+                                                <a href="?big=<?= $big['id']; ?>"><?= $big['name']; ?>(<?=$Goods->count(['big'=>$big['id']]);?>)</a>
+                                                <?php
+                                                $mids = $Type->all(['parent' => $big['id']]);
+                                                if (count($mids) > 0) {
+                                                        echo "<div class='s'>";
+                                                        foreach ($mids as $mid) {
+                                                ?>
+                                                                <a href="?big=<?= $big['id']; ?>&mid=<?= $mid['id']; ?>"><?= $mid['name']; ?>(<?=$Goods->count(['mid'=>$mid['id']]);?>)</a>
+                                        <?php
+                                                        }
+                                                        echo "</div>";
+                                                }
+                                                echo "</div>";
+                                        }
+                                        ?>
+                                        
                         </div>
                         <span>
                                 <div>進站總人數</div>
