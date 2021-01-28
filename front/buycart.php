@@ -1,15 +1,23 @@
 <?php
+
 if(isset($_GET['goods'])){
     $_SESSION['cart'][$_GET['goods']]=$_GET['qt'];
 }
 
 if(empty($_SESSION['mem'])){
     to('index.php?do=login');
+    exit();
 }
 
 ?>
 
 <h2 class="ct"><?=$_SESSION['mem'];?>的購物車</h2>
+<?php
+if(empty($_SESSION['cart'])){
+    echo "目前購物車是空的喔~";
+    exit();
+}
+?>
 <table class="all">
 <tr class="tt ct">
     <td>編號</td>
@@ -21,7 +29,6 @@ if(empty($_SESSION['mem'])){
     <td>刪除</td>
 </tr>
 <?php
-
 foreach($_SESSION['cart'] as $id=>$qt){
     $g=$Goods->find($id);
 ?>
