@@ -1,6 +1,15 @@
 <?php
 include_once "base.php";
+if (isset($_GET['do']) && $_GET['do'] == 'buycart') {
+        if (isset($_GET['goods'])) {
+                $_SESSION['cart'][$_GET['goods']] = $_GET['qt'];
+        }
 
+        if (empty($_SESSION['mem'])) {
+                to('index.php?do=login');
+                exit();
+        }
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- saved from url=(0039) -->
@@ -45,20 +54,20 @@ include_once "base.php";
                 </div>
                 <div id="left" class="ct">
                         <div style="min-height:400px;">
-                                <a href="?">全部商品(<?=$Goods->count();?>)</a>
+                                <a href="?">全部商品(<?= $Goods->count(); ?>)</a>
                                 <?php
                                 $bigs = $Type->all(['parent' => 0]);
                                 foreach ($bigs as $big) {
-                                        ?>
+                                ?>
                                         <div class="ww">
-                                                <a href="?big=<?= $big['id']; ?>"><?= $big['name']; ?>(<?=$Goods->count(['big'=>$big['id']]);?>)</a>
+                                                <a href="?big=<?= $big['id']; ?>"><?= $big['name']; ?>(<?= $Goods->count(['big' => $big['id']]); ?>)</a>
                                                 <?php
                                                 $mids = $Type->all(['parent' => $big['id']]);
                                                 if (count($mids) > 0) {
                                                         echo "<div class='s'>";
                                                         foreach ($mids as $mid) {
                                                 ?>
-                                                                <a href="?big=<?= $big['id']; ?>&mid=<?= $mid['id']; ?>"><?= $mid['name']; ?>(<?=$Goods->count(['mid'=>$mid['id']]);?>)</a>
+                                                                <a href="?big=<?= $big['id']; ?>&mid=<?= $mid['id']; ?>"><?= $mid['name']; ?>(<?= $Goods->count(['mid' => $mid['id']]); ?>)</a>
                                         <?php
                                                         }
                                                         echo "</div>";
@@ -66,28 +75,28 @@ include_once "base.php";
                                                 echo "</div>";
                                         }
                                         ?>
-                                        
+
+                                        </div>
+                                        <span>
+                                                <div>進站總人數</div>
+                                                <div style="color:#f00; font-size:28px;">
+                                                        00005 </div>
+                                        </span>
                         </div>
-                        <span>
-                                <div>進站總人數</div>
-                                <div style="color:#f00; font-size:28px;">
-                                        00005 </div>
-                        </span>
+                        <div id="right">
+                                <?php
+                                $do = $_GET['do'] ?? "main";
+                                $file = "front/" . $do . ".php";
+                                if (file_exists($file)) {
+                                        include_once $file;
+                                } else {
+                                        echo "檔案不存在";
+                                }
+                                ?>
+                        </div>
+                        <div id="bottom" style="line-height:70px;background:url(img/bot.png); color:#FFF;" class="ct">
+                                <?= $Bottom->find(1)['bottom']; ?> </div>
                 </div>
-                <div id="right">
-                        <?php
-                        $do = $_GET['do'] ?? "main";
-                        $file = "front/" . $do . ".php";
-                        if (file_exists($file)) {
-                                include_once $file;
-                        } else {
-                                echo "檔案不存在";
-                        }
-                        ?>
-                </div>
-                <div id="bottom" style="line-height:70px;background:url(img/bot.png); color:#FFF;" class="ct">
-                        <?= $Bottom->find(1)['bottom']; ?> </div>
-        </div>
 
 </body>
 

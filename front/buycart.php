@@ -1,16 +1,3 @@
-<?php
-
-if(isset($_GET['goods'])){
-    $_SESSION['cart'][$_GET['goods']]=$_GET['qt'];
-}
-
-if(empty($_SESSION['mem'])){
-    to('index.php?do=login');
-    exit();
-}
-
-?>
-
 <h2 class="ct"><?=$_SESSION['mem'];?>的購物車</h2>
 <?php
 if(empty($_SESSION['cart'])){
@@ -40,7 +27,7 @@ foreach($_SESSION['cart'] as $id=>$qt){
     <td><?=$g['price'];?></td>
     <td><?=$qt*$g['price'];?></td>
     <td>
-        <img src="img/0415.jpg" alt="">
+        <img src="img/0415.jpg" alt="" onclick="delItem(<?=$id;?>)">
     </td>
 </tr>
 <?php
@@ -51,3 +38,11 @@ foreach($_SESSION['cart'] as $id=>$qt){
 <a href="index.php"><img src="img/0411.jpg" alt=""></a>
 <a href="?do=checkout"><img src="img/0412.jpg" alt=""></a>
 </div>
+
+<script>
+function delItem(id){
+    $.post('api/del_item.php',{id},function(){
+        location.href="?do=buycart"
+    })
+}
+</script>

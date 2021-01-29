@@ -10,6 +10,7 @@ $Mem=new DB('mem');
 $Admin=new DB('admin');
 $Type=new DB('type');
 $Goods=new DB('goods');
+$Ord=new DB('ord');
 
 class DB{
     private $dsn="mysql:host=localhost;dbname=db214;charset=utf8";
